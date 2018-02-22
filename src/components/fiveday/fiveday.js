@@ -17,7 +17,7 @@ var getPosition = function (options) {
     console.log("getting weather....")
     let response = await fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&APPID=${apikey}`);
     let data = await response.json();
-    return data;   
+    return data;
  }
 
  
@@ -28,32 +28,40 @@ var getPosition = function (options) {
      constructor(props){
          super(props);
          this.state = {
-            forecastList: []
+            forecastList: [],
+            temp:[]
          };
      }
      componentDidMount(){
         
         getWeatherFiveDayForecast().then(data => {
+            
             console.log(data.list)
             this.setState({
-                forecastList: data.list
+                forecastList: data.list,
+                temp: data.list.main
              });
         });
      }
      render(){
         
         const {forecastList } = this.state;
-
-    
+        
+        
+        const content = forecastList.map((post,index) =>
+        <div key={index}>
+            <h3>{post.dt_txt}</h3>
+            <p>temp: {post.main.temp} </p>
+            <p>temp: {post.weather[0].main} </p> 
+            <p>{post.clouds.all}</p>
+            
+        </div>
+        );
 
          return(
+             
             <div className="fiveday-forecast">
-                <ul>
-                {forecastList.map(list =>
-                <li>date : {list.dt_txt}</li>
-                <li>{list.main.temp}</li>
-                )}
-                </ul>
+                {content}
             </div>
             
         )
