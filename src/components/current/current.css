@@ -1,0 +1,27 @@
+.content {
+    text-align: center;
+    min-width: 100%;
+    margin: 0 auto -50px;
+    margin-bottom: -50px;
+    color: white;
+}
+
+.loader {
+    margin-top: 30px;   
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.weather-icon {
+    height: 5em;
+}
+
+.push {
+    height: 50px;
+  }
+
+ul li {
+    list-style: none;
+}
+
