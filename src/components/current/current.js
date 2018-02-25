@@ -1,7 +1,7 @@
  import React, {Component } from 'react';
  import './current.css';
  import  Weather  from '../../model/Weather';
- import loader from './img/loader-new.gif';
+ import loader from '../img/loader-new.gif';
 
 
  var getPosition = function (options) {
@@ -33,7 +33,7 @@ export default class Current extends Component {
     }
 
     componentDidMount() {
-        this.setState({ isLoading: true })
+        this.setState({ isLoading: true });
         getWeatherViaLocation().then(data => 
             {this.setState({main: data.main,
                             weather: data.weather[0],
@@ -73,6 +73,6 @@ export default class Current extends Component {
                         </ul>
                         <div className="push"></div>
                     </div>
-        )
+                )
     }
 }
