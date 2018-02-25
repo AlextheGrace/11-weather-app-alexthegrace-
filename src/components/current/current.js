@@ -60,12 +60,13 @@ export default class Current extends Component {
                     <div className="content">
                         <ul>
                             <li><h2>{location}</h2></li>
-                            <li> {weather.main}</li>
+                            <li><p>{weather.main}</p></li>
                             <li><img className="weather-icon" src={`http://openweathermap.org/img/w/${weather.icon}.png`} /></li>
                             <li><h1>{main.temp}°</h1></li>
+                            <li><div className="hot">{main.temp_max}</div><div className="cold">{main.temp_min}</div></li>
                             <li> cloudy</li>
                             <li> </li>
-                            <li>humidity: {main.humidity}</li>
+                            <li>humidity: {main.humidity}%</li>
                         </ul>
 
                         <ul>

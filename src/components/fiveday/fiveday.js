@@ -1,7 +1,7 @@
 import React, {Component } from 'react';
 import './fiveday.css';
 import loader from '../img/loader-new.gif';
-
+var groupByTime = require('group-by-time')
 
 //TODO: import export this as reusable
 var getPosition = function (options) {
@@ -43,14 +43,16 @@ var getPosition = function (options) {
         this.setState({ isLoading: true });
         getWeatherFiveDayForecast().then(data => {
             // const result = groupBy(data.list,"dt");
-            const convertDate = data.list;
-            convertDate.forEach(element => {
-                element.dt = new Date(element.dt*1000).getUTCDate();
-            });
-            const output = groupBy(convertDate,'dt');
+            // const convertDate = data.list;
+            // convertDate.forEach(element => {
+            //     element.dt = new Date(element.dt*1000).getUTCDate();
+            // });
+            // const output = groupBy(convertDate,'dt');
+
+            let groupedByDay = groupByTime(data.list, 'ts', 'day')
             console.log(data.list);
-            console.log(output);
-            console.log(output[0]);
+            console.log(groupedByDay);
+        
 
            
             this.setState({
@@ -72,14 +74,17 @@ var getPosition = function (options) {
         
         
         const content = forecastList.map((forecast,index) =>
-        <div key={index}>
+        <div className="forecast-container" key={index}>
             {}
             <h3>  {forecast.dt_txt} </h3> 
-            <p>temp: {forecast.main.temp} </p>
+            <ul>
+            <li><p className="temp">{forecast.main.temp}</p></li>
             <p>weather: {forecast.weather[0].main} </p>
+            <div className="hot">{forecast.main.temp_max}</div><div className="cold">{forecast.main.temp_min}</div>
             
             <img className="weather-icon" src={`http://openweathermap.org/img/w/${forecast.weather[0].icon}.png`} />
             <p>{forecast.clouds.all}</p> 
+            </ul>
         
         </div>
         );

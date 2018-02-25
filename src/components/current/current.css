@@ -12,6 +12,14 @@
     margin-left: auto;
     margin-right: auto;
 }
+h1, h2 {
+    color: white;
+    font-weight: bold;
+}
+p {
+    font-weight: lighter;
+    color: white;
+}
 
 .weather-icon {
     height: 5em;
@@ -23,5 +31,7 @@
 
 ul li {
     list-style: none;
+    font-weight: lighter;
+    color: rgb(167, 167, 167);
 }
 
