@@ -83,7 +83,7 @@ var getPosition = function (options) {
                 <p>weather: {forecast.weather[0].main} </p>
                 <div className="hot">{forecast.main.temp_max}</div><div className="cold">{forecast.main.temp_min}</div>
 
-                <img className="weather-icon" src={`http://openweathermap.org/img/w/${forecast.weather[0].icon}.png`} />
+                <img className="weather-icon" src={`https://openweathermap.org/img/w/${forecast.weather[0].icon}.png`} />
                 <p>{forecast.clouds.all}</p> 
             </ul>
         

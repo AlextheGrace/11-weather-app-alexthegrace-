@@ -16,7 +16,7 @@ async function getWeatherViaLocation() {
     console.log("getting location....");
     let position = await getPosition();
     console.log("getting weather....")
-    let response = await fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&APPID=${apikey}`);
+    let response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&APPID=${apikey}`);
     let data = await response.json();
     return data;
 }
