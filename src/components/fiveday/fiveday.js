@@ -68,33 +68,34 @@ var getPosition = function (options) {
         
         const { location, forecastList, isLoading } = this.state;
 
-        
-
         if (isLoading) {
             return <img className="loader" src={loader}/>
         }
         
         
+        const locationTitle = <h2>{location}</h2>;
         const content = forecastList.map((forecast,index) =>
         <div className="forecast-container" key={index}>
             {}
-            <h3>  {forecast.dt_txt} </h3> 
+            <h3>{forecast.dt_txt}</h3> 
             <ul>
-            <li><p className="temp">{forecast.main.temp}</p></li>
-            <p>weather: {forecast.weather[0].main} </p>
-            <div className="hot">{forecast.main.temp_max}</div><div className="cold">{forecast.main.temp_min}</div>
-            
-            <img className="weather-icon" src={`http://openweathermap.org/img/w/${forecast.weather[0].icon}.png`} />
-            <p>{forecast.clouds.all}</p> 
+                <li><p className="temp">{forecast.main.temp}</p></li>
+                <p>weather: {forecast.weather[0].main} </p>
+                <div className="hot">{forecast.main.temp_max}</div><div className="cold">{forecast.main.temp_min}</div>
+
+                <img className="weather-icon" src={`http://openweathermap.org/img/w/${forecast.weather[0].icon}.png`} />
+                <p>{forecast.clouds.all}</p> 
             </ul>
         
         </div>
         );
 
          return( 
-            <div className="fiveday-forecast">
-            <h2>here</h2>
-                {content}
+            <div>
+                {locationTitle}
+                    <div className="fiveday-forecast">
+                        {content}
+                    </div>
             </div>  
         )
      }

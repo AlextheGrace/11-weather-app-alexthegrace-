@@ -21,15 +21,31 @@ async function getWeatherViaLocation() {
     return data;
 }
 
+    function toCelsius(fahrenheit) {
+    return (fahrenheit - 32) * 5 / 9;
+    }
+  
+    function toFahrenheit(celsius) {
+    return (celsius * 9 / 5) + 32;
+    }
+
+    function convert(input) {
+        return input + 10;  
+    }
+
 
 export default class Current extends Component {
     constructor(props) {
         super(props);
+        this.handleChange = this.handleChange.bind(this);
         this.state = {
             main: [],
             weather: [],
             location: [],
-            unit: "f",
+            temperature: {
+            temp: 0,
+            unit: "c",
+            },
         };
     }
 
@@ -39,18 +55,32 @@ export default class Current extends Component {
             {this.setState({main: data.main,
                             weather: data.weather[0],
                             location: data.name,
+                            temp: data.main.temp,
+                            unit: "c",
                             isLoading: false });
             console.log(data.main);
             console.log(data.weather);
             console.log(data);
         });
     }
+    
 
     handleChange(e) {
         
+        this.setState({unit: e.target.value, });
+        if(this.state.unit === "c") {
+            this.setState({temp: 10});
+        }
+        else {
+            this.setState({temp: 40 });
+        }
+        
+        
+            
+        
     }
     render() {
-         const {location, main, unit, weather, isLoading } = this.state;
+         const {location, temp, main, unit, weather, isLoading } = this.state;
 
             if (isLoading) {
                 return <img className="loader" src={loader}/>
@@ -64,8 +94,8 @@ export default class Current extends Component {
                             <li><h2>{location}</h2></li>
                             <li><p>{weather.main}</p></li>
                             <li><img className="weather-icon" src={`http://openweathermap.org/img/w/${weather.icon}.png`} /></li>
-                            <li><h1>{main.temp}°</h1>
-                                <select value={unit}>
+                            <li><h1>{temp}</h1>
+                                <select value={unit} onChange={this.handleChange}>
                                     <option value="c">C°(celcius)</option>
                                     <option value="f">F°(Fahrenheit)</option>
                                 </select>
