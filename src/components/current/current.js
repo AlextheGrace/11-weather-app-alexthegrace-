@@ -29,6 +29,7 @@ export default class Current extends Component {
             main: [],
             weather: [],
             location: [],
+            unit: "f",
         };
     }
 
@@ -49,23 +50,29 @@ export default class Current extends Component {
         
     }
     render() {
-         const {location, main, weather, isLoading } = this.state;
+         const {location, main, unit, weather, isLoading } = this.state;
 
             if (isLoading) {
                 return <img className="loader" src={loader}/>
-          }
+            }
 
                 return (
 
                     <div className="content">
+                    
                         <ul>
                             <li><h2>{location}</h2></li>
                             <li><p>{weather.main}</p></li>
                             <li><img className="weather-icon" src={`http://openweathermap.org/img/w/${weather.icon}.png`} /></li>
-                            <li><h1>{main.temp}°</h1></li>
+                            <li><h1>{main.temp}°</h1>
+                                <select value={unit}>
+                                    <option value="c">C°(celcius)</option>
+                                    <option value="f">F°(Fahrenheit)</option>
+                                </select>
+                            </li>
                             <li><div className="hot">{main.temp_max}</div><div className="cold">{main.temp_min}</div></li>
                             <li> cloudy</li>
-                            <li> </li>
+                            <li></li>
                             <li>humidity: {main.humidity}%</li>
                         </ul>
 

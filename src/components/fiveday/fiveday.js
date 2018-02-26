@@ -35,6 +35,7 @@ var getPosition = function (options) {
          super(props);
          this.state = {
             forecastList: [],
+            location:[],
             temp:[]
          };
      }
@@ -57,6 +58,7 @@ var getPosition = function (options) {
            
             this.setState({
                 forecastList: data.list,
+                location: data.name,
                 isLoading: false
              });
         });
@@ -64,7 +66,7 @@ var getPosition = function (options) {
      render(){
           
         
-        const {forecastList, isLoading } = this.state;
+        const { location, forecastList, isLoading } = this.state;
 
         
 
@@ -91,6 +93,7 @@ var getPosition = function (options) {
 
          return( 
             <div className="fiveday-forecast">
+            <h2>here</h2>
                 {content}
             </div>  
         )

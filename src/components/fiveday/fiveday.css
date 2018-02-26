@@ -7,11 +7,17 @@
 
 
 .forecast-container {
+    border-radius: 5px;
     flex: 1;
     box-shadow:0 5px 7px 3px rgb(1, 117, 194);
     margin: 1%;
+    background: rgb(3, 77, 126);
+    color: whitesmoke; 
     
     
+}
+h2 {
+    flex:10;
 }
 h3 {
     font-weight:bold;
@@ -21,18 +27,12 @@ ul {
 }
 
 .temp {
-    background: grey;
+    
     font-weight:bold;
     text-align: center;
 }
 
-.hot {
-    color:red;
-}
 
-.cold {
-    color: blue;
-}
 .loader {
     margin-top: 150px;   
     display: block;

@@ -4,6 +4,17 @@
     margin: 0 auto -50px;
     margin-bottom: -50px;
     color: white;
+    box-shadow:0 5px 7px 3px rgb(1, 117, 194);
+    margin-left:30px;
+    margin-right:89px;
+    background: rgb(3, 77, 126);
+    color: whitesmoke; 
+    
+}
+
+select {
+    background:blue;
+    color: white;
 }
 
 .loader {
