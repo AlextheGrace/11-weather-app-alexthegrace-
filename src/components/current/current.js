@@ -29,8 +29,14 @@ async function getWeatherViaLocation() {
     return (celsius * 9 / 5) + 32;
     }
 
-    function convert(input) {
-        return input + 10;  
+    function tryConvert(temperature, convert) {
+        const input = parseFloat(temperature);
+        if (Number.isNaN(input)) {
+          return '';
+        }
+        const output = convert(input);
+        const rounded = Math.round(output * 1000) / 1000;
+        return rounded.toString();
     }
 
 
@@ -68,17 +74,13 @@ export default class Current extends Component {
     handleChange(e) {
         
         this.setState({unit: e.target.value, });
-        if(this.state.unit === "c") {
-            this.setState({temp: 10});
-        }
-        else {
-            this.setState({temp: 40 });
-        }
-        
-        
-            
-        
+        console.log(this.state.unit);
+        if(e.target.value === "f") {
+            console.log(this.state.unit); 
+            this.setState({unit: "f" });               
+        }   
     }
+
     render() {
          const {location, temp, main, unit, weather, isLoading } = this.state;
 
@@ -89,7 +91,6 @@ export default class Current extends Component {
                 return (
 
                     <div className="content">
-                    
                         <ul>
                             <li><h2>{location}</h2></li>
                             <li><p>{weather.main}</p></li>
@@ -105,7 +106,6 @@ export default class Current extends Component {
                             <li></li>
                             <li>humidity: {main.humidity}%</li>
                         </ul>
-
                         <ul>
                             <li> {weather.description}</li>
                         </ul>
