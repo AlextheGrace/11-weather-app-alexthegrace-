@@ -16,7 +16,7 @@ export default class Current extends Component {
             location: [],
             temperature: {
             temp: 0,
-            unit: "c",
+            unit: "C",
             },
         };
     }

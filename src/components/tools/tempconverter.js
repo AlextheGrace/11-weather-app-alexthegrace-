@@ -1,3 +1,5 @@
+
+
 export function toCelsius(fahrenheit) {
     return (fahrenheit - 32) * 5 / 9;
     }
@@ -11,6 +13,6 @@ export function tryConvert(temperature, convert) {
       return '';
     }
     const output = convert(input);
-    const rounded = Math.round(output * 1000) / 1000;
+    const rounded = Math.round(output * 10) / 10;
     return rounded.toString();
     }
