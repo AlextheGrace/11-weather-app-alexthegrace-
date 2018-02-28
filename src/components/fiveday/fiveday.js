@@ -1,25 +1,12 @@
-import React, {Component } from 'react';
-import './fiveday.css';
-import loader from '../img/loader-new.gif';
-var groupByTime = require('group-by-time')
 
-//TODO: import export this as reusable
-var getPosition = function (options) {
-    return new Promise(function (resolve, reject) {
-      navigator.geolocation.getCurrentPosition(resolve, reject, options);
-    });
-  }
- 
- 
- async function getWeatherFiveDayForecast() {
-    const apikey = "e050a36d3b735728a17a7aa66e12cc90";
-    console.log("getting location....");
-    let position = await getPosition();
-    console.log("getting weather....")
-    let response = await fetch(`http://api.openweathermap.org/data/2.5/forecast?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&APPID=${apikey}`);
-    let data = await response.json();
-    return data;
- }
+
+import './fiveday.css';
+import React, {Component } from 'react';
+import loader from '../img/loader-new.gif';
+import {toCelsius, toFahrenheit, tryConvert } from '../tools/tempconverter.js'
+import {getWeatherFiveDayForecast } from '../tools/getweather.js'
+
+
 
  
  const groupBy = function(xs, key) {
@@ -28,6 +15,8 @@ var getPosition = function (options) {
       return rv;
     });
  }
+
+
 
 
  export default class FivedayForeCast extends Component {
@@ -43,19 +32,8 @@ var getPosition = function (options) {
      componentDidMount(){
         this.setState({ isLoading: true });
         getWeatherFiveDayForecast().then(data => {
-            // const result = groupBy(data.list,"dt");
-            // const convertDate = data.list;
-            // convertDate.forEach(element => {
-            //     element.dt = new Date(element.dt*1000).getUTCDate();
-            // });
-            // const output = groupBy(convertDate,'dt');
-
-            let groupedByDay = groupByTime(data.list, 'ts', 'day')
+            // let groupedByDay = groupByTime(data.list, 'ts', 'day')
             console.log(data.list);
-            console.log(groupedByDay);
-        
-
-           
             this.setState({
                 forecastList: data.list,
                 location: data.name,
@@ -93,6 +71,7 @@ var getPosition = function (options) {
          return( 
             <div>
                 {locationTitle}
+
                     <div className="fiveday-forecast">
                         {content}
                     </div>

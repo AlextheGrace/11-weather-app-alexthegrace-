@@ -1,44 +1,10 @@
+
+
  import React, {Component } from 'react';
  import './current.css';
- import  Weather  from '../../model/Weather';
  import loader from '../img/loader-new.gif';
-
-
- var getPosition = function (options) {
-    return new Promise(function (resolve, reject) {
-      navigator.geolocation.getCurrentPosition(resolve, reject, options);
-    });
-  }
-
-
-async function getWeatherViaLocation() {
-    const apikey = "e050a36d3b735728a17a7aa66e12cc90";
-    console.log("getting location....");
-    let position = await getPosition();
-    console.log("getting weather....")
-    let response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&units=metric&APPID=${apikey}`);
-    let data = await response.json();
-    return data;
-}
-
-    function toCelsius(fahrenheit) {
-    return (fahrenheit - 32) * 5 / 9;
-    }
-  
-    function toFahrenheit(celsius) {
-    return (celsius * 9 / 5) + 32;
-    }
-
-    function tryConvert(temperature, convert) {
-        const input = parseFloat(temperature);
-        if (Number.isNaN(input)) {
-          return '';
-        }
-        const output = convert(input);
-        const rounded = Math.round(output * 1000) / 1000;
-        return rounded.toString();
-    }
-
+ import {toCelsius, toFahrenheit, tryConvert } from '../tools/tempconverter.js'
+ import {getWeatherViaLocation} from '../tools/getweather.js'
 
 export default class Current extends Component {
     constructor(props) {
@@ -62,7 +28,7 @@ export default class Current extends Component {
                             weather: data.weather[0],
                             location: data.name,
                             temp: data.main.temp,
-                            unit: "c",
+                            unit: "C",
                             isLoading: false });
             console.log(data.main);
             console.log(data.weather);
@@ -72,13 +38,23 @@ export default class Current extends Component {
     
 
     handleChange(e) {
-        
-        this.setState({unit: e.target.value, });
+        if(this.state.unit === "F") {
+        const toF= tryConvert(this.state.temp, toFahrenheit);
+        this.setState({unit: e.target.value,
+                        temp: toF});
+        console.log(e.target.value);
         console.log(this.state.unit);
-        if(e.target.value === "f") {
-            console.log(this.state.unit); 
-            this.setState({unit: "f" });               
-        }   
+        }
+        else{
+        const toC= tryConvert(this.state.temp, toCelsius);
+        this.setState({unit: e.target.value,
+                        temp: toC });
+        console.log(e.target.value);
+        console.log(this.state.unit);
+
+        }
+        
+    
     }
 
     render() {
@@ -95,10 +71,10 @@ export default class Current extends Component {
                             <li><h2>{location}</h2></li>
                             <li><p>{weather.main}</p></li>
                             <li><img className="weather-icon" src={`http://openweathermap.org/img/w/${weather.icon}.png`} /></li>
-                            <li><h1>{temp}</h1>
+                            <li><h1>{temp}{unit}°</h1>
                                 <select value={unit} onChange={this.handleChange}>
-                                    <option value="c">C°(celcius)</option>
-                                    <option value="f">F°(Fahrenheit)</option>
+                                    <option value="C">C°(celcius)</option>
+                                    <option value="F">F°(Fahrenheit)</option>
                                 </select>
                             </li>
                             <li><div className="hot">{main.temp_max}</div><div className="cold">{main.temp_min}</div></li>
