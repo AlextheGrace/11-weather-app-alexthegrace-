@@ -3,8 +3,8 @@
 import './fiveday.css';
 import React, {Component } from 'react';
 import loader from '../img/loader-new.gif';
-import {toCelsius, toFahrenheit, tryConvert } from '../tools/tempconverter.js'
 import {getWeatherFiveDayForecast } from '../tools/getweather.js'
+import {toCelsius, toFahrenheit, tryConvert } from '../tools/tempconverter.js'
 
 
 
@@ -16,11 +16,17 @@ const groupBy = function(xs, key) {
     });
  }
 
+// const convertToDate = function(array,date) {
+//     return array.forEach(el => {
+//         el.date =  new Date(el.Date*1000).getUTCDate();
+//     });
+// }
+
 
 
 
 export default class FivedayForeCast extends Component {
-     constructor(props){
+    constructor(props){
          super(props);
          this.convertTemp = this.handleChange.bind(this);
          this.handleChange = this.handleChange.bind(this);
@@ -29,42 +35,47 @@ export default class FivedayForeCast extends Component {
             location:[],
             temp:[],
             unit: "C",
-            mainTemp: 0,
+            temp: 0,
          };
      }
      
     componentDidMount(){
         this.setState({ isLoading: true });
         getWeatherFiveDayForecast().then(data => {
-            // let groupedByDay = groupByTime(data.list, 'ts', 'day')
+        const dataList = data.list.forEach(data => {
+            return data.dt = new Date(data.dt*1000).getUTCDate();
+            
+        });
+        console.log(dataList);
+            
             console.log(data.list);
             this.setState({
                 forecastList: data.list,
                 location: data.name,
                 isLoading: false,
                 unit: "C",
-                // mainTemp: data.main
              });
+             
+             
         });
-     }
+    }
     
-   
+    
 
     handleChange(e) {
         if(this.state.unit === "F") {
-        const toF= tryConvert(this.state.forecast.main.temp, toFahrenheit);
+        const toF = tryConvert(this.state.forecast.main.temp, toFahrenheit);
         this.setState({unit: e.target.value,
-                        mainTemp: toF});
+                        forecastList: toF});
         console.log(e.target.value);
         console.log(this.state.unit);
         }
         else{
-        const toC= tryConvert(this.state.forecast.main.temp, toCelsius);
+        const toC = tryConvert(this.state.forecast.main.temp, toCelsius);
         this.setState({unit: e.target.value,
                         mainTemp: toC });
         console.log(e.target.value);
         console.log(this.state.unit);
-
         }
     }
 
@@ -81,15 +92,17 @@ export default class FivedayForeCast extends Component {
         
         const locationTitle = <h2>{location}</h2>;
 
-        const degreeConverter =  <select value={unit} onChange={this.handleChange}>
-                                    <option value="C">C°(celcius)</option>
-                                    <option value="F">F°(Fahrenheit)</option>
-                                </select>;
+        
+        const degreeConverter = <div className="temp-converter">
+                                    <select value={unit} onChange={this.handleChange}>
+                                        <option value="C">C°(celcius)</option>
+                                        <option value="F">F°(Fahrenheit)</option>
+                                    </select>
+                                </div>;
         
 
         const content = forecastList.map((forecast,index) =>
         <div className="forecast-container" key={index}>
-            {}
             <h3>{forecast.dt_txt}</h3> 
                 <ul>
                     <li><p className="temp">{forecast.main.temp}{unit}°</p></li>
@@ -101,7 +114,7 @@ export default class FivedayForeCast extends Component {
         </div>
         );
 
-         return( 
+        return( 
             <div>
                 {locationTitle}
                 {degreeConverter}
@@ -111,4 +124,4 @@ export default class FivedayForeCast extends Component {
             </div>  
         )
      }
- }
+}

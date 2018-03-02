@@ -39,3 +39,7 @@ ul {
     margin-left: auto;
     margin-right: auto;
 }
+
+.degree-converter {
+    text-align: right;
+}
