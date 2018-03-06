@@ -54,6 +54,7 @@ export default class FivedayForeCast extends Component {
                 forecastList: data.list,
                 location: data.name,
                 isLoading: false,
+                unit: "C",
                 celsius: true
              });   
         });
@@ -64,8 +65,6 @@ export default class FivedayForeCast extends Component {
     handleChange(e) {
         this.setState({ celsius: !this.state.celsius })
     }
-
-    
 
      
     render(){
@@ -78,9 +77,10 @@ export default class FivedayForeCast extends Component {
         }
         
         
-        const locationTitle = <h2>{location}</h2>;
+        
 
-    
+        
+
         const content = forecastList.map((forecast,index) =>
         <div className="forecast-container" key={index}>
             <h3>{forecast.dt_txt}</h3> 
@@ -96,7 +96,7 @@ export default class FivedayForeCast extends Component {
 
         return( 
             <div>
-                {locationTitle}
+                <h1>{location}</h1>
                 <button onClick={this.handleChange}>Show in {celsius ? 'F' : 'C'}</button>
                     <div className="fiveday-forecast">
                         {content}

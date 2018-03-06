@@ -14,7 +14,8 @@ export default class Current extends Component {
             main: [],
             weather: [],
             location: [],
-            temp
+            temp: 0,
+            celsius: true
         };
     }
 
@@ -39,7 +40,7 @@ export default class Current extends Component {
     }
 
     render() {
-         const {location, temp, main, unit, weather, isLoading } = this.state;
+         const {location, temp, main, unit, weather, isLoading, celsius } = this.state;
 
             if (isLoading) {
                 return <img className="loader" src={loader}/>
@@ -52,9 +53,7 @@ export default class Current extends Component {
                             <li><h2>{location}</h2></li>
                             <li><p>{weather.main}</p></li>
                             <li><img className="weather-icon" src={`http://openweathermap.org/img/w/${weather.icon}.png`} /></li>
-                            <li><h1>{temp}{unit}°</h1>
-                        
-                            </li>
+                            <li><h1>{celsius ? temp : toFahrenheit(temp)}{celsius ? 'C' : 'F'}°</h1></li>
                             <li><div className="hot">{main.temp_max}</div><div className="cold">{main.temp_min}</div></li>
                             <li> cloudy</li>
                             <li></li>
