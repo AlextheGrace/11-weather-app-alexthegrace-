@@ -15,7 +15,8 @@ export default class Current extends Component {
             weather: [],
             location: [],
             temp: 0,
-            celsius: true
+            celsius: true,
+            sun: []
         };
     }
 
@@ -26,7 +27,7 @@ export default class Current extends Component {
                             weather: data.weather[0],
                             location: data.name,
                             temp: data.main.temp,
-                            unit: "C",
+                            sun: data.sys,
                             isLoading: false });
             console.log(data.main);
             console.log(data.weather);
@@ -39,8 +40,16 @@ export default class Current extends Component {
         this.setState({ celsius: !this.state.celsius })
     }
 
+    convertSunToTime(unixTime) {
+        let dateTime = new Date(unixTime*1000);
+        let hours = dateTime.getHours();
+        let minutes = "0" + dateTime.getMinutes();
+        let formattedTime = hours + ':' + minutes.substr(-2)
+            return formattedTime;
+    }
+
     render() {
-         const {location, temp, main, unit, weather, isLoading, celsius } = this.state;
+         const {location, temp, main, weather, isLoading, celsius, sun } = this.state;
 
             if (isLoading) {
                 return <img className="loader" src={loader}/>
@@ -54,13 +63,15 @@ export default class Current extends Component {
                             <li><p>{weather.main}</p></li>
                             <li><img className="weather-icon" src={`http://openweathermap.org/img/w/${weather.icon}.png`} /></li>
                             <li><h1>{celsius ? temp : toFahrenheit(temp)}{celsius ? 'C' : 'F'}°</h1></li>
+                            <button onClick={this.handleChange}>Show in {celsius ? 'F' : 'C'}</button>
+                            <li>sunrise: {this.convertSunToTime(sun.sunrise)} </li>
+                            <li>sunset:{this.convertSunToTime(sun.sunset)} </li>
                             <li><div className="hot">{main.temp_max}</div><div className="cold">{main.temp_min}</div></li>
-                            <li> cloudy</li>
                             <li></li>
                             <li>humidity: {main.humidity}%</li>
                         </ul>
                         <ul>
-                            <li> {weather.description}</li>
+                            <li>{weather.description}</li>
                         </ul>
                         <div className="push"></div>
                     </div>
