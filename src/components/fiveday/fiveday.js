@@ -1,7 +1,7 @@
 
 
 import './fiveday.css';
-import React, {Component } from 'react';
+import React, { Component } from 'react';
 import loader from '../img/loader-new.gif';
 import {getWeatherFiveDayForecast } from '../tools/getweather.js'
 import {toCelsius, toFahrenheit, tryConvert } from '../tools/tempconverter.js'
@@ -46,6 +46,7 @@ export default class FivedayForeCast extends Component {
             return data.dt = new Date(data.dt*1000).getUTCDate();
             
         });
+        const group = groupBy(data.list);
         console.log(dataList);
             
             console.log(data.list);
@@ -54,15 +55,14 @@ export default class FivedayForeCast extends Component {
                 location: data.name,
                 isLoading: false,
                 unit: "C",
-             });
-             
-             
+             });   
         });
     }
     
     
 
     handleChange(e) {
+
         if(this.state.unit === "F") {
         const toF = tryConvert(this.state.forecast.main.temp, toFahrenheit);
         this.setState({unit: e.target.value,
@@ -70,6 +70,7 @@ export default class FivedayForeCast extends Component {
         console.log(e.target.value);
         console.log(this.state.unit);
         }
+
         else{
         const toC = tryConvert(this.state.forecast.main.temp, toCelsius);
         this.setState({unit: e.target.value,
@@ -95,7 +96,7 @@ export default class FivedayForeCast extends Component {
         
         const degreeConverter = <div className="temp-converter">
                                     <select value={unit} onChange={this.handleChange}>
-                                        <option value="C">C°(celcius)</option>
+                                        <option value="C">C°(celsius)</option>
                                         <option value="F">F°(Fahrenheit)</option>
                                     </select>
                                 </div>;
