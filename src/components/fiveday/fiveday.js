@@ -54,7 +54,7 @@ export default class FivedayForeCast extends Component {
                 forecastList: data.list,
                 location: data.name,
                 isLoading: false,
-                unit: "C",
+                celsius: true
              });   
         });
     }
@@ -62,29 +62,16 @@ export default class FivedayForeCast extends Component {
     
 
     handleChange(e) {
-
-        if(this.state.unit === "F") {
-        const toF = tryConvert(this.state.forecast.main.temp, toFahrenheit);
-        this.setState({unit: e.target.value,
-                        forecastList: toF});
-        console.log(e.target.value);
-        console.log(this.state.unit);
-        }
-
-        else{
-        const toC = tryConvert(this.state.forecast.main.temp, toCelsius);
-        this.setState({unit: e.target.value,
-                        mainTemp: toC });
-        console.log(e.target.value);
-        console.log(this.state.unit);
-        }
+        this.setState({ celsius: !this.state.celsius })
     }
+
+    
 
      
     render(){
           
         
-        const { unit, location, forecastList, isLoading } = this.state;
+        const { unit, location, forecastList, isLoading, celsius } = this.state;
 
         if (isLoading) {
             return <img className="loader" src={loader}/>
@@ -93,20 +80,12 @@ export default class FivedayForeCast extends Component {
         
         const locationTitle = <h2>{location}</h2>;
 
-        
-        const degreeConverter = <div className="temp-converter">
-                                    <select value={unit} onChange={this.handleChange}>
-                                        <option value="C">C°(celsius)</option>
-                                        <option value="F">F°(Fahrenheit)</option>
-                                    </select>
-                                </div>;
-        
-
+    
         const content = forecastList.map((forecast,index) =>
         <div className="forecast-container" key={index}>
             <h3>{forecast.dt_txt}</h3> 
                 <ul>
-                    <li><p className="temp">{forecast.main.temp}{unit}°</p></li>
+                    <li><p className="temp">{celsius ? forecast.main.temp : toFahrenheit(forecast.main.temp)}{celsius ? 'C' : 'F'}°</p></li>
                     <p>weather: {forecast.weather[0].main} </p>
                     <div className="hot">{forecast.main.temp_max}</div><div className="cold">{forecast.main.temp_min}</div>
                     <img className="weather-icon" src={`https://openweathermap.org/img/w/${forecast.weather[0].icon}.png`} />
@@ -118,7 +97,7 @@ export default class FivedayForeCast extends Component {
         return( 
             <div>
                 {locationTitle}
-                {degreeConverter}
+                <button onClick={this.handleChange}>Show in {celsius ? 'F' : 'C'}</button>
                     <div className="fiveday-forecast">
                         {content}
                     </div>
