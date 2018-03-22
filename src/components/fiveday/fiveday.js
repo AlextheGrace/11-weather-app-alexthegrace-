@@ -88,6 +88,8 @@ export default class FivedayForeCast extends Component {
                     <li><p className="temp">{celsius ? forecast.main.temp : toFahrenheit(forecast.main.temp)}{celsius ? 'C' : 'F'}°</p></li>
                     <p>weather: {forecast.weather[0].main} </p>
                     <div className="hot">{forecast.main.temp_max}</div><div className="cold">{forecast.main.temp_min}</div>
+                    <p></p>
+                    <p></p>
                     <img className="weather-icon" src={`https://openweathermap.org/img/w/${forecast.weather[0].icon}.png`} />
                     <p>{forecast.clouds.all}</p> 
                 </ul>
@@ -97,7 +99,7 @@ export default class FivedayForeCast extends Component {
         return( 
             <div>
                 <h1>{location}</h1>
-                <button onClick={this.handleChange}>Show in {celsius ? 'F' : 'C'}</button>
+                    <button onClick={this.handleChange}>Show in {celsius ? 'F' : 'C'}</button>
                     <div className="fiveday-forecast">
                         {content}
                     </div>

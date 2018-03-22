@@ -5,7 +5,7 @@ export function toCelsius(fahrenheit) {
     }
   
 export function toFahrenheit(celsius) {
-    return (celsius * 9 / 5) + 32;
+    return Math.round((celsius * 9 / 5) + 32);
     }
 export function tryConvert(temperature, convert) {
     const input = parseFloat(temperature);

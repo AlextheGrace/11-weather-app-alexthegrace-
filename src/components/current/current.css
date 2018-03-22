@@ -4,14 +4,12 @@
     box-shadow:0 5px 7px 3px rgb(1, 117, 194);
     background: rgb(3, 77, 126);
     color: whitesmoke; 
-    margin: 4em; 
+    margin-right: 5em;
+    margin-left: 5em;
     margin-top: 1em;
+    padding-top: 0.5em;
 }
 
-select {
-    background:blue;
-    color: white;
-}
 
 .loader {
     margin-top: 30px;   
@@ -40,5 +38,10 @@ ul li {
     list-style: none;
     font-weight: lighter;
     color: rgb(167, 167, 167);
+}
+
+button {
+    color: whitesmoke;
+    background: blue;
 }
 

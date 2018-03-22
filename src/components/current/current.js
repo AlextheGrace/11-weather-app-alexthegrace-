@@ -63,7 +63,7 @@ export default class Current extends Component {
                             <li><p>{weather.main}</p></li>
                             <li><img className="weather-icon" src={`http://openweathermap.org/img/w/${weather.icon}.png`} /></li>
                             <li><h1>{celsius ? temp : toFahrenheit(temp)}{celsius ? 'C' : 'F'}°</h1></li>
-                            <button onClick={this.handleChange}>Show in {celsius ? 'F' : 'C'}</button>
+                            <button onClick={this.handleChange}>Show in {celsius ? 'Fahrenheit' : 'Celsius'}</button>
                             <li>sunrise: {this.convertSunToTime(sun.sunrise)} </li>
                             <li>sunset:{this.convertSunToTime(sun.sunset)} </li>
                             <li><div className="hot">{main.temp_max}</div><div className="cold">{main.temp_min}</div></li>
