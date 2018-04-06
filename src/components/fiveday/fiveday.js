@@ -16,15 +16,6 @@ const groupBy = function(xs, key) {
     });
  }
 
-// const convertToDate = function(array,date) {
-//     return array.forEach(el => {
-//         el.date =  new Date(el.Date*1000).getUTCDate();
-//     });
-// }
-
-
-
-
 export default class FivedayForeCast extends Component {
     constructor(props){
          super(props);
